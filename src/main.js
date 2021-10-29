@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 let renderer, camera, scene, mesh;
 
@@ -11,7 +12,7 @@ const init = () => {
   outputContainer.appendChild(renderer.domElement);
 
   scene = new THREE.Scene();
-  prepareScene(scene);
+  prepareScene(scene, outputContainer);
   createObjects(scene);
 
   window.addEventListener(
@@ -26,7 +27,7 @@ const init = () => {
   );
 };
 
-const prepareScene = (scene) => {
+const prepareScene = (scene, domElement) => {
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 0, 10);
   scene.add(light);
@@ -37,6 +38,8 @@ const prepareScene = (scene) => {
   camera.position.set(10, 10, 10);
   camera.lookAt(0, 0, 0);
   scene.add(camera);
+
+  new OrbitControls(camera, domElement);
 };
 
 const createObjects = (scene) => {
